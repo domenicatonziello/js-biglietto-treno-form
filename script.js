@@ -33,30 +33,38 @@ Il recap dei dati e l'output del prezzo finale, andranno quindi stampati in pagi
 const km = document.getElementById('km');
 const age = document.getElementById('age');
 const button = document.querySelector('button');
+const userName = document.getElementById('user-name');
+const userBottom = document.querySelector('.user-bottom');
+const carriage = document.querySelector('.carriage-number');
 const finalPrice = document.querySelector('.final-price');
-
 // 2. Preparare variabile del prezzo per km:
 const priceKm = 0.21;
 
 // 3. Aggiungo eventlistener al button
 button.addEventListener('click', function(){
     // 4. Prendo valori inseriti dall'utente
-    const nKm = km.value;
-    const userAge = age.value;
-    console.log(nKm, userAge);
+    const nKm = km.value.trim();
+    const userAge = age.value.trim();
+    const firstName = userName.value.trim();
+    
+    // n casuale
+    const random = Math.random();
+    const carriageRandom = Math.floor((random * 10) + 1);
     // 5. Calcolare prezzo totale del viaggio:
     let ticketPrice = nKm * priceKm;
     // 6. Applicare sconto 20% per minorenni (< 18 anni):
-    if (userAge < 18){
+    if (userAge === 'minor'){
         let sconto = ticketPrice * 20 / 100;
         ticketPrice = ticketPrice - sconto;
     }
     // 7. Applicare sconto 40% per over 65 (>= 65 anni):
-    else if (userAge >= 65){
+    else if (userAge === 'over'){
         let sconto = ticketPrice * 40 / 100;
         ticketPrice = ticketPrice - sconto;
     }
     console.log(ticketPrice.toFixed(2) + '\u20AC');
     // 8-9. Stampa in DOM:
-    // finalPrice.innerText = ticketPrice.toFixed(2) + '\u20AC';
+    userBottom.innerHTML = ` <strong> ${firstName} </strong> `;
+    carriage.innerText = carriageRandom; 
+    finalPrice.innerText = ticketPrice.toFixed(2) + '\u20AC';
 });
